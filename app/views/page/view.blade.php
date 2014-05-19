@@ -2,7 +2,7 @@
 
 @section('body')
 
-<a href="/{{ $slug }}/edit" class="btn btn-default pull-right">Edit Page</a>
+<a href="/{{ ($slug == '/') ? 'index' : $slug }}/edit" class="btn btn-default pull-right">Edit Page</a>
 
 {{ $page }}
 

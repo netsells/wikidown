@@ -14,12 +14,12 @@
 
 Route::pattern('slug', '.*');
 
-Route::get('{slug}/password', function($slug = 'index')
+Route::get('{slug?}/password', function($slug = 'index')
 {
     return View::make('page.password');
 });
 
-Route::post('{slug}/password', function($slug = 'index')
+Route::post('{slug?}/password', function($slug = 'index')
 {
     if (Config::get('wikidown.password') !== Input::get('password')) {
         return 'access denied';
@@ -30,7 +30,7 @@ Route::post('{slug}/password', function($slug = 'index')
     return Redirect::to($slug . '/edit');
 });
 
-Route::get('{slug}/edit', function($slug = 'index')
+Route::get('{slug?}/edit', function($slug = 'index')
 {
     if (!Session::get('wikidown-authed')) {
         return Redirect::to($slug . '/password');
@@ -39,7 +39,7 @@ Route::get('{slug}/edit', function($slug = 'index')
     $parsedown = new Parsedown;
     $markdownFile = wiki_path($slug . '.md');
 
-    if (File::exists($mscoarkdownFile)) {
+    if (File::exists($markdownFile)) {
         $markdown = File::get($markdownFile);
     } else {
         $markdownFile = wiki_path($slug . '/index.md');
@@ -54,7 +54,7 @@ Route::get('{slug}/edit', function($slug = 'index')
     return View::make('page.edit', ['markdown' => $markdown]);
 });
 
-Route::post('{slug}/edit', function($slug = 'index')
+Route::post('{slug?}/edit', function($slug = 'index')
 {
     if (!Session::get('wikidown-authed')) {
         return Redirect::to($slug . '/password');
