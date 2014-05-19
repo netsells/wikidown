@@ -1,0 +1,18 @@
+{
+  "name": "wikidown",
+  "version": "1.0.0",
+  "homepage": "https://github.com/netsells/wikidown",
+  "license": "MIT",
+  "private": true,
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "devDependencies": {
+    "bootstrap": "~3.1.1",
+    "codemirror": "~4.1.0"
+  }
+}
