@@ -99,3 +99,45 @@ Route::get('{slug}', function($slug = 'index')
 
     return View::make('page.view', ['page' => $parsedown->text($markdown), 'slug' => $slug]);
 });
+
+View::composer('page.view', function($view) {
+
+    $menu = buildTreeForDirectory(wiki_path());
+
+    $view->with('menu', $menu);
+});
+
+function buildTreeForDirectory($path) {
+    $items = File::glob($path . '/*');
+    $return = '';
+
+    if ($path !== wiki_path()) {
+        $return .= "<strong>" . formatPageName($path) . "</strong>";
+    }
+    $return .= "<ul>";
+
+    if ($path == wiki_path()) {
+        $return .= "<strong>" . formatPageName(wiki_path('index.md')) . "</strong>";
+    }
+
+    foreach($items as $item) {
+        $return .= "<li>";
+
+        if (File::isDirectory($item)) {
+            $return .= buildTreeForDirectory($item);
+        } else {
+            $return .= formatPageName($item);
+        }
+
+        $return .= "</li>";
+    }
+    $return .= "</ul>";
+
+    return $return;
+}
+
+function formatPageName($page) {
+    $path = str_replace(wiki_path(), '', str_replace('.md', '', $page));
+    $title = ucwords(str_replace('.md', '', basename($page)));
+    return "<a href='{$path}'>{$title}</a>";
+}
