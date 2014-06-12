@@ -116,10 +116,6 @@ function buildTreeForDirectory($path) {
     }
     $return .= "<ul>";
 
-    if ($path == wiki_path()) {
-        $return .= "<strong>" . formatPageName(wiki_path('index.md')) . "</strong>";
-    }
-
     foreach($items as $item) {
         $return .= "<li>";
 
