@@ -27,8 +27,148 @@ body {
     border: 1px solid #D6D7CD;
     background: #FFF;
 }
-
+.main-container {
+	padding: 0;
+	position: relative;
+}
 table {
     .table;
     .table-bordered;
+}
+.controls {
+	position: absolute;
+	overflow: hidden;
+	right: 0;
+	max-width: 30px;
+	white-space: nowrap;
+	transition: max-width 0.5s;
+	background-color: rgba(0, 0, 0, 0.025);
+	box-shadow: -1px 1px 5px -2px rgba(0,0,0,0.25);
+	border: 1px solid rgba(0, 0, 0, 0.05);
+	padding: 5px 10px;
+	> i {
+		margin-right: 15px;
+		display: inline-block;
+	}
+	a {
+		display: inline-block;
+		vertical-align: middle;
+		.btn-xs;
+	}
+	&:hover {
+		max-width: 200px;
+	}
+}
+@navWidth: 200px;
+@navPadding: 15px;
+@navInnerWidth: @navWidth - (@navPadding * 2);
+@subNavBorder: rgba(0,0,0,0.25);
+.layout-outer {
+	display: table;
+	width: 100%;
+	.navigation,
+	.theContent {
+		display: table-cell;
+		padding: 15px;
+		vertical-align: top;
+	}
+	.navigation {
+		width: @navWidth;
+		border-right: 1px solid rgba(0,0,0,0.05);
+		ul {
+			list-style: none;
+			margin: 0;
+			padding: 0;
+			letter-spacing: 0.5px;
+			line-height: 22px;
+			&.level-0 {
+				li {
+					font-size: 17px;
+					a {
+						
+					}
+				}
+			}
+			&.level-1 {
+				li {
+					border-bottom: 1px solid rgba(0,0,0,0.05);
+					&:last-child {
+						border: 0;
+					}
+					a {
+						font-size: 90%;
+					}
+				}
+			}
+			&.level-2 {
+				li {
+					font-size: 90%;
+					position: relative;
+					a {
+						
+					}
+					ul {
+						background-color: white;
+						display: block;
+						position: absolute;
+						left: (@navInnerWidth + 30px);
+						width: @navInnerWidth;
+						top: -1px;
+						border: 1px solid @subNavBorder;
+						-webkit-transition: opacity 0.1s, left 0.1s, visibility 0.1s;
+						opacity: 0;
+						visibility: hidden;
+						&:before,
+						&:after {
+							content: '';
+							width: 0;
+							height: 0;
+							border-style: solid;
+							border-width: 15px 15px 15px 0;
+							border-color: transparent white transparent transparent;
+							position: absolute;
+							left: -15px;
+							top: -1px;
+						}
+						&:before {
+							border-color: transparent @subNavBorder transparent transparent;
+						}
+						&:after {
+							left: -14px;
+							top: 0;
+							border-width: 14px 14px 14px 0;
+						}
+					}
+					&:hover {
+						> ul {
+							display: block;
+							position: absolute;
+							left: @navInnerWidth;
+							opacity: 1;
+							visibility: visible;
+						}
+					}
+				}
+			}
+			&.level-3 {
+				// display: none;
+			}
+			&.level-4 {
+				// display: none;
+			}
+			li {
+				margin: 0;
+				strong {
+					font-weight: 500;
+				}
+				a {
+					display: block;
+					padding: 3px 7px;
+				}
+			}
+		}
+	}
+	.theContent {
+
+	}
 }

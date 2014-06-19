@@ -100,27 +100,26 @@ Route::get('{slug}', function($slug = 'index')
     return View::make('page.view', ['page' => $parsedown->text($markdown), 'slug' => $slug]);
 });
 
-View::composer('page.view', function($view) {
+View::composer('layout', function($view) {
 
-    $menu = buildTreeForDirectory(wiki_path());
+    $menu = buildTreeForDirectory(wiki_path(), 0);
 
     $view->with('menu', $menu);
 });
 
-function buildTreeForDirectory($path) {
+function buildTreeForDirectory($path, $level) {
     $items = File::glob($path . '/*');
     $return = '';
 
     if ($path !== wiki_path()) {
         $return .= "<strong>" . formatPageName($path) . "</strong>";
     }
-    $return .= "<ul>";
-
+    $return .= "<ul class=\"level-".$level."\">";
     foreach($items as $item) {
         $return .= "<li>";
 
         if (File::isDirectory($item)) {
-            $return .= buildTreeForDirectory($item);
+            $return .= buildTreeForDirectory($item, ($level+1));
         } else {
             $return .= formatPageName($item);
         }
